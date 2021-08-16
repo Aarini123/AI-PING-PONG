@@ -12,6 +12,11 @@ var paddle1Y;
 var  playerscore =0;
 var audio1;
 var pcscore =0;
+rightWristX=0;
+rightWristY=0;
+rightWristscore=0;
+game_status="";
+
 //ball x and y and speedx speed y and radius
 var ball = {
     x:350/2,
@@ -23,12 +28,33 @@ var ball = {
 
 function setup(){
   var canvas =  createCanvas(700,600);
+  video = createCapture(VIDEO);
+  video.size(600,300);
+video.hide();
+  poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet.on('pose', gotPoses);
 }
 
+function modelLoaded() {
+  console.log('Model Loaded!');
+}
+
+function gotPoses(results){
+  if(results.length>0){
+    rightWristX=results[0].pose.rightWrist.x;
+    rightWristY=results[0].pose.rightWrist.y;
+  }
+}
+
+function start(){
+  game_status="start";
+  document.getElementById("status").innerHTML="Game is Loading....";
+}
 
 function draw(){
-
- background(0); 
+if(game_status=="start"){
+  background(0); 
+  image(video,0,0,700,600);
 
  fill("black");
  stroke("black");
@@ -66,8 +92,8 @@ function draw(){
    //function move call which in very important
     move();
 }
-
-
+}
+ 
 
 //function reset when ball does notcame in the contact of padde
 function reset(){
