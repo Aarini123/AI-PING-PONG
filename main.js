@@ -26,6 +26,11 @@ var ball = {
     dy:3
 }
 
+function preload(){
+  ball_touch_paddel=loadSound("ball_touch_paddel.wav");
+  missed=loadSound("missed.wav");
+}
+
 function setup(){
   var canvas =  createCanvas(700,600);
   video = createCapture(VIDEO);
@@ -43,6 +48,7 @@ function gotPoses(results){
   if(results.length>0){
     rightWristX=results[0].pose.rightWrist.x;
     rightWristY=results[0].pose.rightWrist.y;
+    scorerightWrist=results[0].pose.keypoints[10].score;
   }
 }
 
