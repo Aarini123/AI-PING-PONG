@@ -33,6 +33,7 @@ function preload(){
 
 function setup(){
   var canvas =  createCanvas(700,600);
+  canvas.parent("canvas");
   video = createCapture(VIDEO);
   video.size(600,300);
 video.hide();
@@ -70,6 +71,11 @@ if(game_status=="start"){
  stroke("black");
  rect(0,0,20,700);
  
+ if(rightWristscore>0.2){
+   fill("red");
+   stroke("red");
+circle(rightWristX,rightWristY,30);
+ }
    //funtion paddleInCanvas call 
    paddleInCanvas();
  
@@ -193,4 +199,10 @@ function paddleInCanvas(){
   if(mouseY < 0){
     mouseY =0;
   }  
+}
+
+function restart(){
+  loop();
+  pcscore=0;
+  playerscore=0;
 }
